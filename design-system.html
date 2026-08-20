@@ -1,0 +1,381 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chemical Website - Design Tokens Preview</title>
+  <link rel="stylesheet" href="./css/design-tokens.css">
+  <style>
+    /* Scoped styles specifically for the preview page presentation */
+    .ds-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: var(--spacing-8);
+    }
+    .ds-header {
+      margin-bottom: var(--spacing-12);
+      padding-bottom: var(--spacing-4);
+      border-bottom: 2px solid var(--color-neutral-200);
+    }
+    .ds-section {
+      margin-bottom: var(--spacing-12);
+    }
+    .ds-section-title {
+      font-size: var(--font-size-2xl);
+      color: var(--color-primary-700);
+      margin-bottom: var(--spacing-6);
+      border-bottom: 1px solid var(--color-neutral-200);
+      padding-bottom: var(--spacing-2);
+    }
+    
+    /* Colors Grid */
+    .color-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: var(--spacing-4);
+    }
+    .color-box {
+      border-radius: var(--radius-base);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--color-neutral-200);
+    }
+    .color-swatch {
+      height: 100px;
+      width: 100%;
+    }
+    .color-info {
+      padding: var(--spacing-3);
+      background: var(--color-white);
+    }
+    .color-name {
+      font-size: var(--font-size-sm);
+      font-weight: var(--font-weight-semibold);
+      margin-bottom: var(--spacing-1);
+    }
+
+    /* Typography */
+    .type-sample {
+      margin-bottom: var(--spacing-4);
+      padding: var(--spacing-6);
+      background: var(--color-white);
+      border-radius: var(--radius-base);
+      border: 1px solid var(--color-neutral-200);
+    }
+
+    /* Spacing */
+    .spacing-grid {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-3);
+    }
+    .spacing-item {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-4);
+    }
+    .spacing-bar {
+      height: 24px;
+      background: var(--color-primary-400);
+      border-radius: 2px;
+    }
+    .spacing-label {
+      width: 120px;
+      font-size: var(--font-size-sm);
+      font-family: monospace;
+      color: var(--color-neutral-600);
+    }
+    
+    /* Elements wrapper */
+    .elements-wrapper {
+      display: flex;
+      gap: var(--spacing-6);
+      flex-wrap: wrap;
+      align-items: center;
+      background: var(--color-white);
+      padding: var(--spacing-8);
+      border-radius: var(--radius-base);
+      border: 1px solid var(--color-neutral-200);
+    }
+          .hamburger-btn { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: var(--spacing-2); }
+    .hamburger-btn span { display: block; width: 25px; height: 3px; background-color: var(--color-primary-700); border-radius: 2px; transition: all 0.3s; }
+    .navbar-menu { display: flex; flex: 1; align-items: center; justify-content: flex-end; gap: var(--spacing-8); }
+    /* RESPONSIVE DESIGN */
+    @media (max-width: 1024px) {
+      .hamburger-btn { display: flex; z-index: 200; }
+      .navbar-inner { justify-content: space-between; height: 68px !important; }
+      .navbar-menu {
+        position: absolute; top: 68px; left: 0; width: 100%;
+        background-color: var(--color-white);
+        flex-direction: column; justify-content: flex-start; align-items: flex-start;
+        padding: var(--spacing-6) var(--spacing-8); gap: var(--spacing-6);
+        box-shadow: var(--shadow-lg);
+        opacity: 0; visibility: hidden; transform: translateY(-10px);
+        transition: all var(--transition-fast); z-index: 100;
+        border-top: 1px solid var(--color-neutral-200);
+      }
+      .navbar-menu.is-active { opacity: 1; visibility: visible; transform: translateY(0); }
+      .navbar-nav { flex-direction: column; width: 100%; gap: var(--spacing-2); align-items: flex-start; }
+      .navbar-nav a.nav-link { padding: var(--spacing-3) 0; font-size: var(--font-size-base); }
+      .nav-dropdown-menu { position: relative !important; top: 0 !important; left: 0 !important; transform: none !important; width: 100% !important; max-width: none !important; box-shadow: none; border: none; padding: var(--spacing-2) 0 0 0 !important; display: none; }
+      .nav-dropdown.is-open .nav-dropdown-menu { display: grid !important; }
+      .hamburger-btn.is-active span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+      .hamburger-btn.is-active span:nth-child(2) { opacity: 0; }
+      .hamburger-btn.is-active span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+      .nav-indicator { display: none; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); gap: var(--spacing-4); }
+      .stat-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.15); }
+      .stat-item:nth-child(3), .stat-item:nth-child(4) { border-bottom: none; }
+      .why-grid { grid-template-columns: repeat(2, 1fr); }
+      .products-grid { grid-template-columns: repeat(2, 1fr); }
+      .footer-grid { grid-template-columns: repeat(2, 1fr); }
+      .nav-dropdown-menu { width: 700px; grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 768px) {
+      
+      
+      
+      
+      .nav-indicator { display: none; }
+      .container { padding: 0 var(--spacing-4); }
+      section { padding: var(--spacing-12) 0; }
+      .hero { min-height: auto; padding: var(--spacing-16) 0; background-position: right center; }
+      .hero-actions { flex-direction: column; width: 100%; }
+      .hero-actions .btn { width: 100%; }
+      .about-grid, .two-col, .products-two-col, .vm-grid, .contact-grid { grid-template-columns: 1fr; gap: var(--spacing-8); }
+      .stats-grid, .why-grid, .products-grid, .footer-grid { grid-template-columns: 1fr; }
+      .stat-item:nth-child(3) { border-bottom: 1px solid rgba(255,255,255,0.15); }
+      .about-image-mosaic { grid-template-columns: 1fr; grid-template-rows: auto; }
+      .mosaic-img:first-child { grid-row: auto; }
+      .products-header { flex-direction: column; align-items: flex-start; gap: var(--spacing-4); }
+      .cta-inner { flex-direction: column; text-align: center; }
+      .cta-actions { flex-direction: column; width: 100%; }
+      .cta-actions .btn { width: 100%; }
+      .footer-bottom { flex-direction: column; text-align: center; gap: var(--spacing-4); }
+      .form-row { grid-template-columns: 1fr; }
+      h1 { font-size: 2.25rem !important; }
+      .section-title { font-size: 2rem !important; }
+    }
+  </style>
+</head>
+<body class="bg-neutral-light text-neutral-800">
+
+  <div class="ds-container">
+    <header class="ds-header">
+      <h1 class="text-primary mb-2">Design Tokens Preview</h1>
+      <p>A self-hosted HTML/CSS design system utilizing reusable CSS variables, utility classes, and components.</p>
+    </header>
+
+    <!-- Colors Section -->
+    <section class="ds-section">
+      <h2 class="ds-section-title">Brand Colors</h2>
+      
+      <h3 class="mb-4">Primary (#224977)</h3>
+      <div class="color-grid mb-8">
+        <div class="color-box">
+          <div class="color-swatch" style="background-color: var(--color-primary-100);"></div>
+          <div class="color-info"><div class="color-name">Primary 100</div></div>
+        </div>
+        <div class="color-box">
+          <div class="color-swatch" style="background-color: var(--color-primary-300);"></div>
+          <div class="color-info"><div class="color-name">Primary 300</div></div>
+        </div>
+        <div class="color-box">
+          <div class="color-swatch" style="background-color: var(--color-primary-500);"></div>
+          <div class="color-info"><div class="color-name">Primary 500</div></div>
+        </div>
+        <div class="color-box">
+          <div class="color-swatch" style="background-color: var(--color-primary-700);"></div>
+          <div class="color-info"><div class="color-name">Primary 700 (Base)</div></div>
+        </div>
+        <div class="color-box">
+          <div class="color-swatch" style="background-color: var(--color-primary-900);"></div>
+          <div class="color-info"><div class="color-name">Primary 900</div></div>
+        </div>
+      </div>
+
+      <h3 class="mb-4">Accent & Neutrals</h3>
+      <div class="color-grid">
+        <div class="color-box">
+          <div class="color-swatch" style="background-color: var(--color-accent-red);"></div>
+          <div class="color-info"><div class="color-name">Accent Red</div></div>
+        </div>
+        <div class="color-box">
+          <div class="color-swatch" style="background-color: var(--color-white); border-bottom: 1px solid var(--color-neutral-200);"></div>
+          <div class="color-info"><div class="color-name">White</div></div>
+        </div>
+        <div class="color-box">
+          <div class="color-swatch" style="background-color: var(--color-black);"></div>
+          <div class="color-info"><div class="color-name">Black</div></div>
+        </div>
+        <div class="color-box">
+          <div class="color-swatch" style="background-color: var(--color-neutral-100);"></div>
+          <div class="color-info"><div class="color-name">Neutral 100</div></div>
+        </div>
+        <div class="color-box">
+          <div class="color-swatch" style="background-color: var(--color-neutral-500);"></div>
+          <div class="color-info"><div class="color-name">Neutral 500</div></div>
+        </div>
+        <div class="color-box">
+          <div class="color-swatch" style="background-color: var(--color-neutral-900);"></div>
+          <div class="color-info"><div class="color-name">Neutral 900</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Typography Section -->
+    <section class="ds-section">
+      <h2 class="ds-section-title">Typography (Inter)</h2>
+      <div class="type-sample">
+        <h1>Heading 1 (4xl - 36px)</h1>
+        <h2>Heading 2 (3xl - 30px)</h2>
+        <h3>Heading 3 (2xl - 24px)</h3>
+        <p style="font-size: var(--font-size-xl); font-weight: var(--font-weight-semibold);">Extra Large Semibold (20px)</p>
+        <p style="font-size: var(--font-size-lg);">Large regular text (18px). The quick brown fox jumps over the lazy dog.</p>
+        <p>Base regular text (16px). The quick brown fox jumps over the lazy dog. Designed for readability and structure.</p>
+        <p style="font-size: var(--font-size-sm); color: var(--color-neutral-500);">Small text (14px). Often used for captions and secondary information.</p>
+      </div>
+    </section>
+
+    <!-- UI Elements -->
+    <section class="ds-section">
+      <h2 class="ds-section-title">Buttons & UI Elements</h2>
+      <p class="mb-4">Buttons feature fully rounded corners (var(--radius-full)) and an elegant text rollover animation on hover.</p>
+      <div class="elements-wrapper">
+        <button class="btn btn-primary">
+          <span class="btn-text-anim">
+            <span class="text-default">Primary Button</span>
+            <span class="text-hover">Primary Button</span>
+          </span>
+        </button>
+        
+        <button class="btn btn-secondary">
+          <span class="btn-text-anim">
+            <span class="text-default">Secondary Button</span>
+            <span class="text-hover">Secondary Button</span>
+          </span>
+        </button>
+
+        <button class="btn btn-accent">
+          <span class="btn-text-anim">
+            <span class="text-default">Accent Action</span>
+            <span class="text-hover">Accent Action</span>
+          </span>
+        </button>
+      </div>
+    </section>
+
+    <!-- Spacing & Borders -->
+    <section class="ds-section">
+      <h2 class="ds-section-title">Spacing & Borders</h2>
+      
+      <h3 class="mb-4">Corner Radius</h3>
+      <div class="elements-wrapper mb-8">
+        <div class="rounded" style="width: 120px; height: 120px; background: var(--color-primary-100); border: 2px solid var(--color-primary-500); display: flex; align-items: center; justify-content: center; font-size: var(--font-size-sm); font-weight: var(--font-weight-bold); flex-direction: column;">
+          <span>Base</span>
+          <span style="font-weight: normal; margin-top: 4px;">4px</span>
+        </div>
+      </div>
+
+      <h3 class="mb-4">Spacing Scale System</h3>
+      <div class="spacing-grid">
+        <div class="spacing-item"><span class="spacing-label">--spacing-1 (4px)</span><div class="spacing-bar" style="width: var(--spacing-1)"></div></div>
+        <div class="spacing-item"><span class="spacing-label">--spacing-2 (8px)</span><div class="spacing-bar" style="width: var(--spacing-2)"></div></div>
+        <div class="spacing-item"><span class="spacing-label">--spacing-3 (12px)</span><div class="spacing-bar" style="width: var(--spacing-3)"></div></div>
+        <div class="spacing-item"><span class="spacing-label">--spacing-4 (16px)</span><div class="spacing-bar" style="width: var(--spacing-4)"></div></div>
+        <div class="spacing-item"><span class="spacing-label">--spacing-6 (24px)</span><div class="spacing-bar" style="width: var(--spacing-6)"></div></div>
+        <div class="spacing-item"><span class="spacing-label">--spacing-8 (32px)</span><div class="spacing-bar" style="width: var(--spacing-8)"></div></div>
+        <div class="spacing-item"><span class="spacing-label">--spacing-12 (48px)</span><div class="spacing-bar" style="width: var(--spacing-12)"></div></div>
+        <div class="spacing-item"><span class="spacing-label">--spacing-16 (64px)</span><div class="spacing-bar" style="width: var(--spacing-16)"></div></div>
+      </div>
+    </section>
+
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+              const hamburger = document.querySelector('.hamburger-btn');
+        const navMenu = document.querySelector('.navbar-menu');
+        if(hamburger && navMenu) {
+          hamburger.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            hamburger.classList.toggle('is-active');
+            navMenu.classList.toggle('is-active');
+          });
+        }
+              const navDropdown = document.querySelector('.nav-dropdown');
+        if(navDropdown) {
+          navDropdown.addEventListener('click', (e) => {
+            if (window.innerWidth <= 1024) {
+              if(e.target.closest('a.nav-link')) {
+                e.preventDefault();
+              }
+              navDropdown.classList.toggle('is-open');
+            }
+          });
+        }
+      const navLinks = document.querySelectorAll('.navbar-nav > li');
+      const navbarNav = document.querySelector('.navbar-nav');
+      if(!navbarNav) return;
+      
+      const indicator = document.createElement('div');
+      indicator.classList.add('nav-indicator');
+      navbarNav.appendChild(indicator);
+
+      function moveIndicator(el) {
+        indicator.style.width = el.offsetWidth + 'px';
+        indicator.style.left = el.offsetLeft + 'px';
+        indicator.style.opacity = '1';
+      }
+
+      navLinks.forEach(link => {
+        link.addEventListener('mouseenter', (e) => {
+          moveIndicator(e.currentTarget);
+        });
+      });
+
+      navbarNav.addEventListener('mouseleave', () => {
+        const activeLink = document.querySelector('.navbar-nav a.active');
+        if(activeLink) {
+          moveIndicator(activeLink.parentElement);
+        } else {
+          indicator.style.opacity = '0';
+        }
+      });
+
+      // Highlight active based on data-page matching filename
+      const path = window.location.pathname;
+      let page = path.split('/').pop().replace('.html', '') || 'index';
+      const activeLink = document.querySelector('.navbar-nav a[data-page="' + page + '"]');
+      if(activeLink) {
+        activeLink.classList.add('active');
+        setTimeout(() => moveIndicator(activeLink.parentElement), 50);
+      }
+    });
+  </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
