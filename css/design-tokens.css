@@ -364,3 +364,19 @@ p { margin-bottom: var(--spacing-4); }
 }
 
 
+@media (max-width: 768px) {
+    .brand-tagline {
+        display: none !important;
+    }
+}
+
+/* FIX MOBILE OVERFLOW AND NAVBAR */
+body {
+    overflow-x: hidden;
+    width: 100%;
+}
+@media (max-width: 768px) {
+    .brand-tagline {
+        display: none !important;
+    }
+}
